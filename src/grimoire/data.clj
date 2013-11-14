@@ -1,6 +1,4 @@
-(ns grimoire.data
-  (:import (javafx.collections FXCollections ObservableList)
-           (javafx.scene Node)))
+(ns grimoire.data)
 
 ; twitter
 (def oauthtoken
@@ -8,15 +6,6 @@
 (def tweets 
   "Received status vector"
   (ref [])) 
-(def tweet-maps 
-  "Node -> status map"
-  (ref {}))
-(def nodes 
-  "Listview's Item array"
-  (FXCollections/observableArrayList))
-(def mention-nodes 
-  "Listview's Item array"
-  (FXCollections/observableArrayList))
 (def mentions
   "Received mentions (deplicated)"
   (ref []))
@@ -26,9 +15,6 @@
 (def myname
   "My twitter screen name"
   (atom nil))
-(def imagemap
-  "Profile images map"
-  (ref {}))
 
 ; plugin
 (def plugins 
@@ -50,28 +36,15 @@
   (on-click [this e]))
 
 ; system
-(def max-nodes 
-  "Var max node (deplicated)"
-  (atom 100))
-(def tweets-size 
-  "Var tweets text size"
-  (atom 13))
 (def nrepl-server 
   "Var nrepl-server"
   (atom nil))
 (def browser 
   "Var to use browser"
-  (atom "chromium"))
-(def key-maps 
-  "Key Shortcuts hash-map, key: [key on-ctrl? on-shift?] value: function"
-  (ref {}))
-(def nervous
-  "Use dialog warning"
-  (atom false))
-
-; javafx
-(def main-stage (atom nil))
-(def mainscene (atom nil))
-(def theme 
-  "Var grimoire's theme"
-  (atom ""))
+  (atom "w3m"))
+(def mode
+  "現在のmodeを示す :normal 通常 :eval Evalモード :post 投稿モード"
+  (atom :normal))
+(def out-cache
+  "出力のキャッシュ，後で出力したい場合に使う"
+  (ref []))

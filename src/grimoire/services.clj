@@ -20,7 +20,7 @@
         conf (.build confbuilder)]
     (reset! twitterstream 
         (doto (.getInstance (TwitterStreamFactory. conf))
-          (.addListener ^twitter4j.UserStreamListener (listener))))))
+          (.addListener ^twitter4j.UserStreamListener listener)))))
   
 (defn start 
   []
