@@ -25,6 +25,7 @@
   "Grimoireのプラグインを示すプロトコル，プラグインを作るにはreify,proxyを用いて継承し，pluginsに追加して下さい．" 
   (get-name [this])
   (on-status [this status])
+  (on-reply [this status])
   (on-rt [this status])
   (on-unrt [this status])
   (on-fav [this source target status])

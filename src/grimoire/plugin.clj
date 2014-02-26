@@ -19,12 +19,10 @@
     (do
       (dosync
         (alter plugins empty))
-      (binding [*ns* (find-ns 'grimoire.plugin)]
+      (binding [*ns* (find-ns 'grimoire.core)]
         (doall
           (map #(add-plugin! 
                  (load-file 
                    (str (get-home) "/.grimoire/plugin/" %)))
             loaded))))))
 
-; load plugin
-(load-plugin)

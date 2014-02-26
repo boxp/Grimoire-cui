@@ -23,20 +23,26 @@
                      " "
                      (get-source (.. status getSource)))]
         (do
-          ; プラグイン処理
-          (try
-            (doall
-              (map #(.on-status % status) @plugins))
-            (catch Exception e (print-later! (.getMessage e))))
           ; メンションツイート？
           (if (some #(= @myname %) (map #(.getText %) (.. status getUserMentionEntities)))
             ; メンションツイート処理
             (do
               (print-later! (str "-> " output))
               (dosync
-                (alter mentions conj status)))
-            ; ツイート処理
-            (print-later! output)))))
+                (alter mentions conj status))
+              ; プラグイン処理(on-reply)
+              (try
+                (doall
+                  (map #(.on-reply % status) @plugins))
+                (catch Exception e (print-later! (.getMessage e)))))
+            (do
+              ; プラグイン処理(on-status)
+              (try
+                (doall
+                  (map #(.on-status % status) @plugins))
+                (catch Exception e (print-later! (.getMessage e))))
+              ; ツイート処理
+              (print-later! output))))))
 
     (onDeletionNotice [this statusDeletionNotice]
       (do

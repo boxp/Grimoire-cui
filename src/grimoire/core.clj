@@ -4,8 +4,10 @@
         [grimoire.commands]
         [grimoire.services]
         [grimoire.listener]
-        [grimoire.data])
+        [grimoire.data]
+        [grimoire.plugin])
   (:import (java.io File))
+  (:require [ring.adapter.jetty :as jetty])
   (:gen-class))
 
 
@@ -34,6 +36,15 @@
           (gen-twitterstream listener)
           (start))))
 
+    ; Heroku 向け jetty サーバ
+    (if (empty? args)
+      nil
+      (let [app (fn [req] 
+                  {:status 200
+                   :headers {"Content-Type" "text/plain"}
+                   :body "Hello, world"})]
+        (jetty/run-jetty app {:port (Integer. (first args)) :join? false})))
+
     ; タイトル
     (reset! myname (. twitter getScreenName))
     (print
@@ -58,7 +69,8 @@
      "* Exit  :  exit           *\n"
      "* Stream: (start)         *\n"
      "---------------------------\n")
-
+   ; load plugin
+   (load-plugin)
    ; REPL
    ; dirty
     (loop [input (read-line)]
