@@ -11,7 +11,7 @@
 (def twitterstream (atom nil))
 
 (defn gen-twitterstream
-  [listener]
+  [^twitter4j.UserStreamListener listener]
   (let [confbuilder (doto (ConfigurationBuilder.)
     (.setOAuthConsumerKey (:consumerKey consumers))
     (.setOAuthConsumerSecret (:consumerSecret consumers))
