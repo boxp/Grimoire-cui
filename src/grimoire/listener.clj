@@ -1,5 +1,4 @@
 (ns grimoire.listener
-  (:gen-class)
   (:import (twitter4j UserStreamListener))
   (:use [grimoire.oauth]
         [clojure.string :only [split]]
@@ -7,7 +6,7 @@
         [grimoire.commands]))
 
 ; Userstream status listener (console)
-(def listener
+(defn listener []
   (reify UserStreamListener
     (onStatus [this status]
       (let [_ (dosync

@@ -22,7 +22,7 @@
       (do 
         (get-tokens)
         (gen-twitter)
-        (gen-twitterstream listener)
+        (gen-twitterstream (listener))
         (start))
       (catch Exception e 
         (do
@@ -33,7 +33,7 @@
           (gen-tokens (read-line))
           (get-tokens)
           (gen-twitter)
-          (gen-twitterstream listener)
+          (gen-twitterstream (listener))
           (start))))
 
     ; Heroku 向け jetty サーバ

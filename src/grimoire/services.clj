@@ -11,16 +11,15 @@
 (def twitterstream (atom nil))
 
 (defn gen-twitterstream
-  [^twitter4j.UserStreamListener listener]
+  [listener]
   (let [confbuilder (doto (ConfigurationBuilder.)
-    (.setOAuthConsumerKey (:consumerKey consumers))
-    (.setOAuthConsumerSecret (:consumerSecret consumers))
-    (.setOAuthAccessToken (:token @tokens))
-    (.setOAuthAccessTokenSecret (:tokenSecret @tokens)))
+                      (.setOAuthConsumerKey (:consumerKey consumers))
+                      (.setOAuthConsumerSecret (:consumerSecret consumers))
+                      (.setOAuthAccessToken (:token @tokens))
+                      (.setOAuthAccessTokenSecret (:tokenSecret @tokens)))
         conf (.build confbuilder)]
-    (reset! twitterstream 
-        (doto (.getInstance (TwitterStreamFactory. conf))
-          (.addListener ^twitter4j.UserStreamListener listener)))))
+    (reset! twitterstream (.getInstance (TwitterStreamFactory. conf)))
+    (.addListener @twitterstream listener)))
   
 (defn start 
   []
