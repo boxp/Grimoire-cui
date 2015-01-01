@@ -30,12 +30,7 @@
               (dosync
                 (alter mentions conj status))
               ; 通知音
-              (ring!)
-              ; プラグイン処理(on-reply)
-              (try
-                (doall
-                  (map #(.on-reply % status) @plugins))
-                (catch Exception e (print-later! (.getMessage e)))))
+              (ring!))
             (do
               ; プラグイン処理(on-status)
               (try

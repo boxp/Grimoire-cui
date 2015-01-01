@@ -41,7 +41,7 @@
   (atom nil))
 (def browser 
   "Var to use browser"
-  (atom "w3m"))
+  (atom "firefox"))
 (def mode
   "現在のmodeを示す :normal 通常 :eval Evalモード :post 投稿モード"
   (atom :normal))

@@ -270,3 +270,9 @@
   (when @ring?
     (-> (or @se (reset! se (-> "ring.mp3" resource dy/read-sound)))
         dy/play)))
+
+(defn load-rc []
+  (binding [*ns* (find-ns 'grimoire.core)]
+    (try
+      (load-file (str (get-home) "/.grimoire.clj"))
+      (catch Exception e (println (.getMessage e))))))

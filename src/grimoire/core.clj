@@ -71,6 +71,8 @@
      "---------------------------\n")
    ; load plugin
    (load-plugin)
+   ; load grimoire.rc
+   (load-rc)
    ; REPL
    ; dirty
     (loop [input (read-line)]
