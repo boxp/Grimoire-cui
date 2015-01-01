@@ -64,7 +64,8 @@
         "Success retweet: @" 
         (.. status getUser getScreenName)
         " - "
-        (.. status getText)))
+        (.. status getText))
+      statusnum)
     (catch Exception e "something has wrong.")))
 
 ; リツイートの取り消し
@@ -77,7 +78,8 @@
         "Success unretweet: @" 
         (.. status getUser getScreenName)
         " - "
-        (.. status getText)))
+        (.. status getText))
+      statusnum)
     (catch Exception e "something has wrong.")))
 
 ; ふぁぼふぁぼ
@@ -90,7 +92,8 @@
         "Success Fav: @" 
         (.. status getUser getScreenName)
         " - "
-        (.. status getText)))
+        (.. status getText))
+      statusnum)
     (catch Exception e "something has wrong.")))
 
 ; あんふぁぼ
@@ -103,7 +106,8 @@
         "Success UnFav: @" 
         (.. status getUser getScreenName)
         " - "
-        (.. status getText)))
+        (.. status getText))
+      statusnum)
     (catch Exception e "something has wrong.")))
 
 ; ふぁぼRT
@@ -111,18 +115,14 @@
 (defn favret 
   "statusnum(ツイートの右下に表示)を指定してふぁぼ＆リツイート"
   [statusnum]
-  (do 
-    (fav statusnum)
-    (ret statusnum)))
+  (-> statusnum fav ret))
 
 ; ふぁぼRT
 ; clean
 (defn unfavret 
   "statusnum(ツイートの右下に表示)を指定してふぁぼ＆リツイートを取り消す"
   [statusnum]
-  (do 
-    (unfav statusnum)
-    (unret statusnum)))
+  (-> statusnum unfav unret))
 
 ; つい消し
 (defn del
@@ -130,13 +130,13 @@
   [statusnum]
   (try 
     (let [status (@tweets statusnum)]
-      (do
-        (.destroyStatus twitter (.getId status))
-        (str 
-          "Success delete: @" 
-          (.. status getUser getScreenName)
-          " - "
-          (.. status getText))))
+      (.destroyStatus twitter (.getId status))
+      (str 
+        "Success delete: @" 
+        (.. status getUser getScreenName)
+        " - "
+        (.. status getText))
+      statusnum)
     (catch Exception e "something has wrong.")))
 
 ; リプライ
@@ -227,9 +227,8 @@
   (let [status (@tweets statusnum)]
     (if (.isRetweet status)
       (.createFriendship twitter (.. status getRetweetedStatus getUser getId) true)
-      (.createFriendship twitter (.. status getUser getId) true))))
-
-
+      (.createFriendship twitter (.. status getUser getId) true))
+    statusnum))
 
 (defn vim
   "vimを立ち上げ，保存した文字列をEvalします．(引数を指定するとファイル名を指定)"
