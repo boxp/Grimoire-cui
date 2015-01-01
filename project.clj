@@ -10,6 +10,7 @@
                  [com.pi4j/pi4j-core "0.0.5"]
                  [enlive "1.1.4"]
                  [ring/ring-jetty-adapter "1.1.6"]
-                 [org.clojure/tools.nrepl "0.2.3"]]
+                 [org.clojure/tools.nrepl "0.2.3"]
+                 [org.craigandera/dynne "0.4.1"]]
   :main grimoire.core
   :java-source-paths ["src/java"])

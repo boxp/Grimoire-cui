@@ -5,7 +5,8 @@
         [clojure.java.io]
         [grimoire.data]
         [grimoire.oauth])
-  (:require [net.cgrand.enlive-html :as en])
+  (:require [net.cgrand.enlive-html :as en]
+            [dynne.sampled-sound :as dy])
   (:import (twitter4j TwitterFactory Query Status User UserMentionEntity)
            (twitter4j.auth AccessToken)
            (twitter4j StatusUpdate)
@@ -264,17 +265,8 @@
           (alter out-cache empty))))
     (dosync
       (alter out-cache conj (apply str string)))))
-  
-; デバック用
-(defn reload 
-  ([]
-    "プロジェクトのソースコードをリロードします．(デバック用)"
-    (do
-      (load-file (str (get-home) "/.grimoire.clj"))
-      (load-file (str (get-home) "/Dropbox/program/clojure/grimoire-cli/src/grimoire/commands.clj"))
-      (load-file (str (get-home) "/Dropbox/program/clojure/grimoire-cli/src/grimoire/plugin.clj"))
-      (use 'grimoire.commands)
-      (use 'grimoire.plugin)))
-  ([file]
-    (do
-      (load-file (str (get-home) "/Dropbox/program/clojure/grimoire-cli/src/grimoire/" file ".clj")))))
+
+(defn ring! []
+  (when @ring?
+    (-> (or @se (reset! se (-> "ring.mp3" resource dy/read-sound)))
+        dy/play)))

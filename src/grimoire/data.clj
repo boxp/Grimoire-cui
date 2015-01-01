@@ -48,3 +48,10 @@
 (def out-cache
   "出力のキャッシュ，後で出力したい場合に使う"
   (ref []))
+(def se
+  "通知音の音声ファイル"
+  (atom nil))
+
+;; flags
+(def ring?
+  (atom false))

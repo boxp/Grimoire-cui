@@ -29,6 +29,8 @@
               (print-later! (str "-> " output))
               (dosync
                 (alter mentions conj status))
+              ; 通知音
+              (ring!)
               ; プラグイン処理(on-reply)
               (try
                 (doall
@@ -80,6 +82,8 @@
 
     (onFavorite [this source target favoritedStatus]
       (do
+        ; 通知音
+        (ring!)
         ; プラグインの実行
         (try
           (doall
@@ -116,6 +120,8 @@
 
     (onFollow [this source followedUser]
       (do
+        ; 通知音
+        (ring!)
         ; プラグインの実行
         (try 
           (doall
@@ -130,6 +136,8 @@
 
     (onDirectMessage [this directMessage]
       (do
+        ; 通知音
+        (ring!)
         ; プラグインの実行
         (try
           (doall
@@ -203,6 +211,8 @@
 
     (onBlock [this source blockedUser]
       (do
+        ; 通知音
+        (ring!)
         (print-later!
           "onBlock user:@"
           (.getScreenName source)
